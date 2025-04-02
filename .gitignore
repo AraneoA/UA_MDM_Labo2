@@ -1,4 +1,4 @@
-# CSV files
+ # CSV files
 *.csv
 
 # JSON files
@@ -8,5 +8,4 @@
 *.jpg
 *.jpeg
 
-# DS_Store files
-.DS_Store
+*.DS_Store
