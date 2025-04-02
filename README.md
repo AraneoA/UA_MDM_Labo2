@@ -15,7 +15,7 @@ Proyecto estructurado para análisis de datos sobre adopción de mascotas, inclu
 - `integration`: Rama final para consolidar todos los análisis.
 
 ### Carpetas Clave
-```
+
 ├── data/
 │   ├── raw/          # Datos crudos originales
 │   └── processed/    # Datos limpios (generados en preprocesamiento)
@@ -25,7 +25,7 @@ Proyecto estructurado para análisis de datos sobre adopción de mascotas, inclu
 ├── src/              # Funciones reutilizables (.py)
 ├── requirements.txt  # Dependencias del proyecto
 └── CONTRIBUTING.md   # Guía de contribución detallada
-```
+
 
 ---
 
