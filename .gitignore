@@ -9,3 +9,9 @@
 *.jpeg
 
 *.DS_Store
+
+*.sqlite3
+
+*.joblib
+
+/work/optuna_artifacts/
