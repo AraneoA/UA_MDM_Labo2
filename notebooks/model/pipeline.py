@@ -5,16 +5,17 @@ desarrolladas por el equipo.
 
 import os
 import pandas as pd
-import importlib
 import sys
+import importlib.util
+import importlib
 
-# Agregar la carpeta actual al path para poder importar los módulos
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Agregar las carpetas al path para poder importar los módulos
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Agrega la carpeta notebooks/
 
 # Ruta al archivo original
-INPUT_PATH = '../../input/petfinder-adoption-prediction/train/train.csv'
+INPUT_PATH = 'input/petfinder-adoption-prediction/train/train.csv'
 # Ruta donde guardar el dataset procesado
-OUTPUT_PATH = '../../datasets_procesados/dataset_final.csv'
+OUTPUT_PATH = 'datasets_procesados/dataset_final.csv'
 
 def run_pipeline():
     # Cargar el dataset original
@@ -22,32 +23,40 @@ def run_pipeline():
     dataset = pd.read_csv(INPUT_PATH)
     print(f"Dataset original cargado. Shape: {dataset.shape}")
     
-    # Lista de módulos de feature engineering a aplicar
-    fe_modules = [
-        'fe_jose',
-        #'FE_gmp',
-        'fe_adrian',  # Tu módulo
-        #Agrega aquí los módulos de tus compañeros
-        # 'fe_nombre_compañero1',
-        # 'fe_nombre_compañero2',
+    # Lista de módulos de feature engineering a aplicar con rutas relativas al proyecto
+    fe_files = [
+        '../fe/fe_jose.py',
+        '../fe/fe_gmp.py',
+        '../fe/fe_adrian.py',
     ]
     
-    # Aplicar cada módulo de feature engineering en secuencia
-    for module_name in fe_modules:
+    # Aplicar cada archivo de feature engineering en secuencia
+    for file_path in fe_files:
         try:
-            print(f"\nAplicando transformaciones de {module_name}...")
-            # Importar dinámicamente el módulo
-            module = importlib.import_module(module_name)
+            # Construir la ruta completa al archivo
+            full_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), file_path)
+            
+            if not os.path.exists(full_path):
+                print(f"⚠️ Advertencia: El archivo {full_path} no existe.")
+                continue
+                
+            print(f"\nAplicando transformaciones de {os.path.basename(file_path)}...")
+            
+            # Importar el módulo desde la ruta de archivo
+            module_name = os.path.basename(file_path).replace('.py', '')
+            spec = importlib.util.spec_from_file_location(module_name, full_path)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
             
             # Verificar si el módulo tiene una función apply_features
             if hasattr(module, 'apply_features'):
                 dataset = module.apply_features(dataset)
+                print(f"Transformaciones de {module_name} aplicadas. Nuevo shape: {dataset.shape}")
             else:
                 print(f"⚠️ Advertencia: {module_name} no tiene función apply_features()")
-            
-            print(f"Transformaciones de {module_name} aplicadas. Nuevo shape: {dataset.shape}")
+                
         except Exception as e:
-            print(f"❌ Error al aplicar {module_name}: {str(e)}")
+            print(f"❌ Error al aplicar {file_path}: {str(e)}")
     
     # Guardar el dataset procesado
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
