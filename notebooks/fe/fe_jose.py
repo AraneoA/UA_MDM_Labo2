@@ -27,10 +27,10 @@ def apply_features(df):
     ).astype('int64')
     
     # Se agrega variable dicotomica para saber si tiene nombre o no
-    dataset['Tiene_Nombre'] = np.where(data['Name'].notnull() & (data['Name'].str.strip() != ''), 1, 0)
+    dataset['Tiene_Nombre'] = np.where(dataset['Name'].notnull() & (dataset['Name'].str.strip() != ''), 1, 0)
     
     # Se agrega variable dicotomica para saber si es gratis o no
-    dataset['Es_Gratis'] = ((data['Fee'] == 0).astype(int))    
+    dataset['Es_Gratis'] = ((dataset['Fee'] == 0).astype(int))    
     
     return dataset
 
