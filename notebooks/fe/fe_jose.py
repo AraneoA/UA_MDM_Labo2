@@ -30,7 +30,7 @@ def apply_features(df):
     dataset['Tiene_Nombre'] = np.where(data['Name'].notnull() & (data['Name'].str.strip() != ''), 1, 0)
     
     # Se agrega variable dicotomica para saber si es gratis o no
-    data['Es_Gratis'] = ((data['Fee'] == 0).astype(int))    
+    dataset['Es_Gratis'] = ((data['Fee'] == 0).astype(int))    
     
     return dataset
 
