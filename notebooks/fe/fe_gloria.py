@@ -17,15 +17,38 @@ def apply_features(df):
     # Copia del dataframe para no modificar el original
     dataset = df.copy()
     
-    # ACA LAS TRANSFORMACIONES, respetando que el nombre de la variable "dataset"
-    # ---------->>>>>>>>>>>> Aquí tus transformaciones, por ejemplo: <<<<<<<<------------------
-    # Agrega las variables ratio_adoption_speedN
-    for i in range(5):
-        dataset[f'ratio_AdoptionSpeed{i}'] = np.nan  # Tu código para calcular esta feature
+   def clean_text(text):
+    if pd.isna(text):
+        return ''
+    text = text.lower()  
+    text = re.sub(r'\W+', ' ', text)  # Eliminar caracteres especiales
+    text = re.sub(r'\b\w\b', ' ', text)  # Eliminar números o letras individuales
+    text = re.sub(r'\s+', ' ', text).strip()  # Eliminar espacios extra
+    return text
+
+    dataset['Description_limpia'] = dataset['Description'].apply(clean_text)
     
-    # ---->>>>>>>> Más transformaciones...        <<<<<<<<<<---------------------
-    
+    def get_removed_special_chars(original, cleaned):
+    if pd.isna(original):  # Si el texto original es NaN
+        return []
+    # Convertir ambos textos a conjuntos de caracteres
+    original_chars = set(original)  # Conjunto de caracteres del texto original
+    cleaned_chars = set(cleaned)    # Conjunto de caracteres del texto limpio
+    # Identificar los caracteres que están en el original pero no en el limpio
+    removed_chars = original_chars - cleaned_chars
+    # Mostrar todo lo eliminado (caracteres especiales, números y letras individuales)
+    all_removed_chars = [char for char in removed_chars if not char.isspace()]
+    return all_removed_chars
+
+# Aplicar la función para generar la nueva columna
+dataset['Removed_Special_Chars'] = dataset.apply(
+    lambda row: get_removed_special_chars(row['Description'], row['Description_limpia']), axis=1
+)
+
+
     return dataset
+
+
 
 
 
