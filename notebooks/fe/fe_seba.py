@@ -41,7 +41,12 @@ def apply_features(df):
 
     # Verificar los cambios
     print(train[['Age', 'AgeCategory']].head())
-        
+    #################################################
+    # Crear la nueva columna 'State_importance' basada en la columna 'State'
+    train['State_importance'] = train['State'].apply(lambda x: 1 if x == 41326 else (2 if x == 41401 else 3))
+
+    # Verificar los cambios
+    print(train[['State', 'State_importance']].head())
     
     
     
