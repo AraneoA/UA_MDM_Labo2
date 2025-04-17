@@ -25,8 +25,23 @@ def apply_features(df):
     for i in range(5):
         dataset[f'ratio_AdoptionSpeed{i}'] = np.nan  # Tu código para calcular esta feature
     
-    
-    
+    def categorizar_edad(dataset):
+        """
+        Crea una nueva columna 'AgeCategory' en el DataFrame basado en la edad de los animales.
+        Categorías:
+        - 1: Menos de 12 meses
+        - 2: Entre 12 y 48 meses (inclusive)
+        - 3: 48 meses o más
+        """
+        dataset['AgeCategory'] = dataset['Age'].apply(lambda x: 1 if x < 12 else (2 if x < 48 else 3))
+        return dataset
+
+    # Aplicar la función al dataset
+    train = categorizar_edad(train)
+
+    # Verificar los cambios
+    print(train[['Age', 'AgeCategory']].head())
+        
     
     
     
