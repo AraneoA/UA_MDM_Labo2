@@ -19,22 +19,22 @@ def apply_features(df):
     # Copia del dataframe para no modificar el original
     dataset = df.copy()
     
-    # Concatenar Color y crea nueva variable Color
+    # 1 Concatenar Color y crea nueva variable Color
     dataset['Color'] = (
     dataset['Color1'].astype(str) +
     dataset['Color2'].astype(str) +
     dataset['Color3'].astype(str)
     ).astype('int64')
     
-    # Se agrega variable dicotomica para saber si tiene nombre o no
+    # 2 Se agrega variable dicotomica para saber si tiene nombre o no
     dataset['Tiene_Nombre'] = np.where(dataset['Name'].notnull() & (dataset['Name'].str.strip() != ''), 1, 0)
     
-    # Se agrega variable dicotomica para saber si es gratis o no
+    # 3 Se agrega variable dicotomica para saber si es gratis o no
     dataset['Es_Gratis'] = ((dataset['Fee'] == 0).astype(int))  
     
     
-    # Se agrega variable para saber si a mascotas más grandes y más caras
-    dataset['Age_Fee'] = data['Age'] * data['Fee']
+    # 4 Se agrega variable para saber si a mascotas más grandes y más caras
+    dataset['Age_Fee'] = (data['Age'] * data['Fee'])
     
     return dataset
 
