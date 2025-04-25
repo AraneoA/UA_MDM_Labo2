@@ -34,7 +34,7 @@ def apply_features(df):
     
     
     # Se agrega variable para saber si a mascotas más grandes y más caras
-    dataset['Age_Fee'] = data['Age'] * data['Fee']  
+    dataset['Age_Fee'] = data['Age'] * data['Fee']
     
     return dataset
 
