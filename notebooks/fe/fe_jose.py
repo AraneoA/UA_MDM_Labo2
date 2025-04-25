@@ -30,7 +30,11 @@ def apply_features(df):
     dataset['Tiene_Nombre'] = np.where(dataset['Name'].notnull() & (dataset['Name'].str.strip() != ''), 1, 0)
     
     # Se agrega variable dicotomica para saber si es gratis o no
-    dataset['Es_Gratis'] = ((dataset['Fee'] == 0).astype(int))    
+    dataset['Es_Gratis'] = ((dataset['Fee'] == 0).astype(int))  
+    
+    
+    # Se agrega variable para saber si a mascotas más grandes y más caras
+    dataset['Age_Fee'] = data['Age'] * data['Fee']  
     
     return dataset
 
