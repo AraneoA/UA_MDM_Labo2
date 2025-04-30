@@ -22,8 +22,8 @@ def apply_features(df):
     # ACA LAS TRANSFORMACIONES, respetando que el nombre de la variable "dataset"
     # ---------->>>>>>>>>>>> Aquí tus transformaciones, por ejemplo: <<<<<<<<------------------
     # Agrega las variables ratio_adoption_speedN
-    for i in range(5):
-        dataset[f'ratio_AdoptionSpeed{i}'] = np.nan  # Tu código para calcular esta feature
+    #for i in range(5):
+    #    dataset[f'ratio_AdoptionSpeed{i}'] = np.nan  # Tu código para calcular esta feature
     
     def categorizar_edad(dataset):
         """
@@ -37,16 +37,16 @@ def apply_features(df):
         return dataset
 
     # Aplicar la función al dataset
-    train = categorizar_edad(train)
+    dataset = categorizar_edad(dataset)
 
     # Verificar los cambios
-    print(train[['Age', 'AgeCategory']].head())
+    print(dataset[['Age', 'AgeCategory']].head())
     #################################################
     # Crear la nueva columna 'State_importance' basada en la columna 'State'
-    train['State_importance'] = train['State'].apply(lambda x: 1 if x == 41326 else (2 if x == 41401 else 3))
+    dataset['State_importance'] = dataset['State'].apply(lambda x: 1 if x == 41326 else (2 if x == 41401 else 3))
 
     # Verificar los cambios
-    print(train[['State', 'State_importance']].head())
+    print(dataset[['State', 'State_importance']].head())
     
     
     
