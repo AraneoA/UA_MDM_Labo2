@@ -31,7 +31,7 @@ TEST_OUTPUT_PATH = os.path.join(OUTPUT_DIR, 'test_final.csv')
 FE_MODULE_NAMES = [
     'fe_adrian',
     'fe_jose',
-    #'fe_gloria',
+    'fe_gloria',
     'fe_seba'
 ]
 
