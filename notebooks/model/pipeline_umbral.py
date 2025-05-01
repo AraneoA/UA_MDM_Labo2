@@ -41,7 +41,7 @@ TEST_OUTPUT_PATH = os.path.join(OUTPUT_DIR, 'test_final_thres.csv')   # Salida f
 FE_MODULE_NAMES = [
     'fe_adrian',
     'fe_jose',
-    #'fe_gloria', # Comentado para no incluirlo
+    'fe_gloria',
     'fe_seba'
 ]
 
